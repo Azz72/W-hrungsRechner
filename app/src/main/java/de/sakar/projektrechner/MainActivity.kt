@@ -14,6 +14,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import de.sakar.projektrechner.ui.theme.ProjektRechnerTheme
 import de.sakar.projektrechner.R
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,12 +49,10 @@ fun CurrencyConverterApp(modifier: Modifier = Modifier) {
         "GBP to USD" to 1.33
     )
 
-
     fun updateConversionRate() {
         val key = "$startCurrency to $targetCurrency"
         conversionRate = exchangeRates[key] ?: 1.0
     }
-
 
     LaunchedEffect(startCurrency, targetCurrency, amount) {
         if (amount.isNotEmpty()) {
@@ -66,7 +67,6 @@ fun CurrencyConverterApp(modifier: Modifier = Modifier) {
         }
     }
 
-
     LaunchedEffect(startCurrency, targetCurrency) {
         updateConversionRate()
     }
@@ -80,7 +80,7 @@ fun CurrencyConverterApp(modifier: Modifier = Modifier) {
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
             Text(text = "Währungsrechner", style = MaterialTheme.typography.titleLarge)
             Image(
-                painter = painterResource(id = R.drawable.geld), // Bild "geld.jpg"
+                painter = painterResource(id = R.drawable.geld),
                 contentDescription = "App Logo",
                 modifier = Modifier.size(48.dp)
             )
@@ -113,7 +113,6 @@ fun CurrencyConverterApp(modifier: Modifier = Modifier) {
         }
 
         Text(text = "Livekurs: $conversionRate", style = MaterialTheme.typography.bodyLarge)
-
 
         result?.let {
             Text(
